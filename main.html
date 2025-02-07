@@ -1,16 +1,130 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
-	<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            position: relative;
+            width: 70vw;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin: 50px 0 0 50px;
+            /* 
+            border: 2px solid black;
+            border-radius: 10%; */
+
+        }
+
+        .circle {
+            border: 2px solid black;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+        }
+
+        button {
+            margin: 50px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .circle.active {
+            background-color: blue;
+            border-color: blue;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 0;
+            height: 5px;
+            background-color: blue;
+            transition: width 0.3s ease-in-out;
+        }
+    </style>
 </head>
 
-<body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
+<!-- <body>
+    <div class="container">
+        <div class="circle" id="c1"></div>
+        <div class="circle" id="c2"></div>
+        <div class="circle" id="c3"></div>
+        <div class="circle" id="c4"></div>
+        <div class="circle" id="c5"></div>
+    </div>
+    <button id="prev">Previous</button>
+    <button id="next">Next</button>
+</body> -->
 
+<body>
+    <div class="container">
+        <div class="progress-line"></div>
+        <div class="circle active" id="c1"></div>
+        <div class="circle" id="c2"></div>
+        <div class="circle" id="c3"></div>
+        <div class="circle" id="c4"></div>
+        <div class="circle" id="c5"></div>
+    </div>
+    <div class="buttons">
+        <button id="prev" disabled>Previous</button>
+        <button id="next">Next</button>
+    </div>
+
+    <script>
+        // Get references to buttons and circles
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+        const circles = document.querySelectorAll(".circle");
+
+        // Track the current step (start at the first circle)
+        let currentStep = 1;
+
+        // Function to update the progress bar and buttons
+        function updateProgress() {
+            // Loop through circles and toggle the "active" class
+            circles.forEach((circle, index) => {
+                if (index < currentStep) {
+                    circle.classList.add("active");
+                } else {
+                    circle.classList.remove("active");
+                }
+            });
+
+            // Enable or disable buttons based on the step
+            prev.disabled = currentStep === 1;
+            next.disabled = currentStep === circles.length;
+        }
+
+        // Event listener for "Next" button
+        next.addEventListener("click", () => {
+            if (currentStep < circles.length) {
+                currentStep++; // Move to the next step
+                updateProgress(); // Update the UI
+            }
+        });
+
+        // Event listener for "Previous" button
+        prev.addEventListener("click", () => {
+            if (currentStep > 1) {
+                currentStep--; // Move to the previous step
+                updateProgress(); // Update the UI
+            }
+        });
+
+        // Initial setup to ensure correct button states
+        updateProgress();
+
+    </script>
 </body>
 
 </html>
